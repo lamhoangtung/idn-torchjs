@@ -7,6 +7,7 @@ namespace torchjs
 ScriptModule::ScriptModule(const std::string filename) : is_cuda(false)
 {
   // Load the traced network from the file
+  torch::NoGradGuard no_grad;
   this->mModule = torch::jit::load(filename);
 }
 
@@ -17,6 +18,7 @@ ScriptModule::~ScriptModule()
 
 NAN_MODULE_INIT(ScriptModule::Init)
 {
+  torch::NoGradGuard no_grad;
   v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
   tpl->SetClassName(Nan::New("ScriptModule").ToLocalChecked());
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
@@ -35,6 +37,7 @@ NAN_MODULE_INIT(ScriptModule::Init)
 // JavaScript object creation
 NAN_METHOD(ScriptModule::New)
 {
+  torch::NoGradGuard no_grad;
   if (info.IsConstructCall())
   {
     // Get the filename parameter
@@ -55,6 +58,7 @@ NAN_METHOD(ScriptModule::New)
 
 NAN_METHOD(ScriptModule::forward)
 {
+  torch::NoGradGuard no_grad;
   ScriptModule *script_module = ObjectWrap::Unwrap<ScriptModule>(info.Holder());
   Nan::MaybeLocal<v8::Object> maybe = Nan::To<v8::Object>(info[0]);
   Tensor *tensor = Nan::ObjectWrap::Unwrap<Tensor>(maybe.ToLocalChecked());
@@ -97,6 +101,7 @@ NAN_METHOD(ScriptModule::forward)
 
 NAN_METHOD(ScriptModule::cuda)
 {
+  torch::NoGradGuard no_grad;
   ScriptModule *script_module = ObjectWrap::Unwrap<ScriptModule>(info.Holder());
   if(torch::cuda::is_available()){
     script_module->is_cuda = true;
@@ -106,6 +111,7 @@ NAN_METHOD(ScriptModule::cuda)
 
 NAN_METHOD(ScriptModule::is_cuda_available)
 {
+  torch::NoGradGuard no_grad;
   ScriptModule *script_module = ObjectWrap::Unwrap<ScriptModule>(info.Holder());
   if(torch::cuda::is_available()){
     info.GetReturnValue().Set(true);
@@ -116,6 +122,7 @@ NAN_METHOD(ScriptModule::is_cuda_available)
 
 NAN_METHOD(ScriptModule::cpu)
 {
+  torch::NoGradGuard no_grad;
   ScriptModule *script_module = ObjectWrap::Unwrap<ScriptModule>(info.Holder());
   script_module->is_cuda = false;
   script_module->mModule.to(at::kCPU);
