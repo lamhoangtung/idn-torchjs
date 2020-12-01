@@ -42,7 +42,7 @@ NAN_METHOD(ScriptModule::New)
   {
     // Get the filename parameter
     // v8::String::Utf8Value param_filename(info[0]->ToString());
-    v8::Local<v8::String> str = info[0]->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::String>());
+    v8::Local<v8::String> param_filename = info[0]->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::String>());
     const std::string filename = std::string(*param_filename);
     // Create a new script module using that file name
     ScriptModule *obj = new ScriptModule(filename);
