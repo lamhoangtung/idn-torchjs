@@ -91,8 +91,8 @@ NAN_METHOD(ones)
   std::vector<int64_t> dims;
   for (int i = 0; i < length; i++)
   {
-    v8::Local<v8::Value> v;
-    int64_t d = array->Get(i)->Int64Value(Nan::GetCurrentContext()).FromJust();
+    // v8::Local<v8::Value> v;
+    int32_t d = array->Get(i)->Int32Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
@@ -120,12 +120,12 @@ NAN_METHOD(zeros)
   std::vector<int64_t> dims;
   for (int i = 0; i < length; i++)
   {
-    v8::Local<v8::Value> v;
-    int64_t d = array->Get(i)->Int64Value(Nan::GetCurrentContext()).FromJust();
+    // v8::Local<v8::Value> v;
+    int32_t d = array->Get(i)->Int32Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
-  // wrapping the new torch::Tensor that was created by torch::ones
+  // wrapping the new torch::Tensor that was created by torch::zeros
   at::Tensor v = torch::zeros(dims, torch::requires_grad(require_grad));
   auto newinst = Tensor::NewInstance();
   Tensor *obj = Nan::ObjectWrap::Unwrap<Tensor>(newinst);
