@@ -10,6 +10,7 @@ ScriptModule::ScriptModule(const std::string filename) : is_cuda(false)
   // Load the traced network from the file
   torch::NoGradGuard no_grad;
   this->mModule = torch::jit::load(filename);
+  this->mModule.eval();
 }
 
 // Class deconstructor
