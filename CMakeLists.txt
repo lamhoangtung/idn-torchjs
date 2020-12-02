@@ -15,7 +15,7 @@ file(DOWNLOAD https://download.pytorch.org/libtorch/nightly/cu${CUDA_VERSION_MAJ
 endif()
 endif()
 execute_process(
-  COMMAND unzip -o ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip
+  COMMAND unzip -qq -o ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip
 )
 else()
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip")
@@ -28,7 +28,7 @@ file(DOWNLOAD https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-
 endif()
 endif()
 execute_process(
-  COMMAND unzip -o ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip
+  COMMAND unzip -qq -o ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip
 )
 endif(CUDA_FOUND)
 
