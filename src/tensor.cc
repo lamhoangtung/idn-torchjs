@@ -92,7 +92,7 @@ NAN_METHOD(ones)
   for (int i = 0; i < length; i++)
   {
     v8::Local<v8::Value> v;
-    int64_t d = array->Get(i)->Nan::Int64Value(Nan::GetCurrentContext()).FromJust();
+    int64_t d = array->Get(i)->Int64Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
@@ -121,7 +121,7 @@ NAN_METHOD(zeros)
   for (int i = 0; i < length; i++)
   {
     v8::Local<v8::Value> v;
-    int64_t d = array->Get(i)->Nan::Int64Value(Nan::GetCurrentContext()).FromJust();
+    int64_t d = array->Get(i)->Int64Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
