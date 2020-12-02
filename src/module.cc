@@ -3,7 +3,7 @@
 
 namespace torchjs
 {
-torch::NoGradGuard no_grad;
+torch::NoGradGuard no_grad_module;
 // Class constructor
 ScriptModule::ScriptModule(const std::string filename) : is_cuda(false)
 {

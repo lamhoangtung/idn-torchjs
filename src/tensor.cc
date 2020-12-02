@@ -5,7 +5,7 @@ using std::endl;
 
 namespace torchjs
 {
-torch::NoGradGuard no_grad;
+torch::NoGradGuard no_grad_tensor;
 Nan::Persistent<v8::FunctionTemplate> Tensor::constructor;
 
 Tensor::Tensor(){};
