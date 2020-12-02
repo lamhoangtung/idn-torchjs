@@ -36,7 +36,7 @@ NAN_MODULE_INIT(Tensor::Init)
   // Nan::SetPrototypeMethod(tpl, "setTensor", setTensor);
   // Nan::SetPrototypeMethod(tpl, "getTensor", getTensor);
 
-  target->Set(Nan::New("Tensor").ToLocalChecked(), ctor->GetFunction());
+  target->Set(Nan::New("Tensor").ToLocalChecked(), Nan::GetFunctGet(ctor).ToLocalChecked());
 }
 
 void Tensor::setTensor(at::Tensor tensor) { this->mTensor = tensor; }
@@ -45,7 +45,7 @@ torch::Tensor Tensor::getTensor() { return this->mTensor; }
 v8::Local<v8::Object> Tensor::NewInstance()
 {
   v8::Local<v8::Function> constructorFunc =
-      Nan::New(Tensor::constructor)->GetFunction();
+      Nan::GetFunctGet(Nan::New(Tensor::constructor)).ToLocalChecked();
   const int argc = 0;
   v8::Local<v8::Value> argv[] = {};
   return Nan::NewInstance(constructorFunc, argc, argv).ToLocalChecked();
