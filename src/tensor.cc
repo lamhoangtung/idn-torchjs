@@ -84,7 +84,7 @@ NAN_METHOD(ones)
   if (!info[0]->IsArray() || !info[1]->IsBoolean())
     return Nan::ThrowError(Nan::New("Wrong argument types").ToLocalChecked());
   // Retrieving parameters (require_grad and tensor shape)
-  const bool require_grad = info[1]->BooleanValue();
+  const bool require_grad = Nan::To<bool>(info[1]).FromJust();
   const v8::Local<v8::Array> array = info[0].As<v8::Array>();
   const uint32_t length = array->Length();
   // Convert from v8::Array to std::vector
@@ -92,7 +92,7 @@ NAN_METHOD(ones)
   for (int i = 0; i < length; i++)
   {
     v8::Local<v8::Value> v;
-    int d = array->Get(i)->NumberValue();
+    int64_t d = array->Get(i)->Nan::Int64Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
@@ -113,7 +113,7 @@ NAN_METHOD(zeros)
   if (!info[0]->IsArray() || !info[1]->IsBoolean())
     return Nan::ThrowError(Nan::New("Wrong argument types").ToLocalChecked());
   // Retrieving parameters (require_grad and tensor shape)
-  const bool require_grad = info[1]->BooleanValue();
+  const bool require_grad = Nan::To<bool>(info[1]).FromJust();
   const v8::Local<v8::Array> array = info[0].As<v8::Array>();
   const uint32_t length = array->Length();
   // Convert from v8::Array to std::vector
@@ -121,7 +121,7 @@ NAN_METHOD(zeros)
   for (int i = 0; i < length; i++)
   {
     v8::Local<v8::Value> v;
-    int d = array->Get(i)->NumberValue();
+    int64_t d = array->Get(i)->Nan::Int64Value(Nan::GetCurrentContext()).FromJust();
     dims.push_back(d);
   }
   // Call the libtorch and create a new torchjs::Tensor object
