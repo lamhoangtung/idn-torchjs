@@ -240,8 +240,8 @@ NAN_SETTER(Tensor::HandleSetters)
 NAN_METHOD(Tensor::cuda)
 {
   torch::NoGradGuard no_grad;
-  Tensor *self = ObjectWrap::Unwrap<Tensor>(info.Holder());
-  self->mTensor.to(at::kCUDA);
+  Tensor *tensor = ObjectWrap::Unwrap<Tensor>(info.Holder());
+  tensor->mTensor.to(at::kCUDA);
 }
 
 } // namespace torchjs
