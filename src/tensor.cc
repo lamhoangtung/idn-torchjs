@@ -240,7 +240,7 @@ NAN_SETTER(Tensor::HandleSetters)
 NAN_METHOD(Tensor::cuda)
 {
   torch::NoGradGuard no_grad;
-  Tensor *self = Nan::ObjectWrap::Unwrap<Tensor>(info.Holder());
+  Tensor *self = ObjectWrap::Unwrap<Tensor>(info.Holder());
   self->mTensor.to(at::kCUDA);
 }
 
