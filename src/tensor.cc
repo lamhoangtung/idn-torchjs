@@ -13,6 +13,7 @@ Tensor::~Tensor(){};
 
 NAN_MODULE_INIT(Tensor::Init)
 {
+  torch::NoGradGuard no_grad;
   v8::Local<v8::FunctionTemplate> ctor =
       Nan::New<v8::FunctionTemplate>(Tensor::New);
   Tensor::constructor.Reset(ctor);
@@ -29,6 +30,8 @@ NAN_MODULE_INIT(Tensor::Init)
   Nan::SetAccessor(ctor->InstanceTemplate(),
                    Nan::New("type").ToLocalChecked(), Tensor::HandleGetters,
                    Tensor::HandleSetters);
+  Nan::SetPrototypeMethod(ctor, "cuda", cuda);
+  Nan::SetPrototypeMethod(ctor, "cpu", cpu);
   // Nan::SetAccessor(ctor->InstanceTemplate(), Nan::New("y").ToLocalChecked(),
   // Tensor::HandleGetters, Tensor::HandleSetters);
   // Nan::SetAccessor(ctor->InstanceTemplate(), Nan::New("z").ToLocalChecked(),
@@ -242,6 +245,13 @@ NAN_METHOD(Tensor::cuda)
   torch::NoGradGuard no_grad;
   Tensor *tensor = ObjectWrap::Unwrap<Tensor>(info.Holder());
   tensor->mTensor.to(at::kCUDA);
+}
+
+NAN_METHOD(Tensor::cpu)
+{
+  torch::NoGradGuard no_grad;
+  Tensor *tensor = ObjectWrap::Unwrap<Tensor>(info.Holder());
+  tensor->mTensor.to(at::kCPU);
 }
 
 } // namespace torchjs
