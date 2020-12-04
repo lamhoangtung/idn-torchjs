@@ -43,7 +43,7 @@ NAN_MODULE_INIT(Tensor::Init)
   target->Set(Nan::New("Tensor").ToLocalChecked(), Nan::GetFunction(ctor).ToLocalChecked());
 }
 
-void Tensor::setTensor(at::Tensor *tensor) { this->mTensor = tensor; }
+void Tensor::setTensor(at::Tensor &tensor) { this->mTensor = tensor; }
 torch::Tensor Tensor::getTensor() { return this->mTensor; }
 
 v8::Local<v8::Object> Tensor::NewInstance()

@@ -10,7 +10,7 @@ class Tensor : public Nan::ObjectWrap
 {
 public:
   static NAN_MODULE_INIT(Init);
-  void setTensor(at::Tensor *tensor);
+  void setTensor(at::Tensor &tensor);
   torch::Tensor getTensor();
   static v8::Local<v8::Object> NewInstance();
 
