@@ -11,7 +11,11 @@ file(DOWNLOAD https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUD
 elseif(APPLE)
 file(DOWNLOAD https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-macos-latest.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip)
 else()
-file(DOWNLOAD https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-shared-with-deps-latest.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip)
+if ("${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}" STREQUAL "102")
+file(DOWNLOAD https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-shared-with-deps-1.7.0.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip)
+else()
+file(DOWNLOAD https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-shared-with-deps-1.7.0%2Bcu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip)
+endif()
 endif()
 endif()
 execute_process(
@@ -24,7 +28,7 @@ file(DOWNLOAD https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with
 elseif(APPLE)
 file(DOWNLOAD https://download.pytorch.org/libtorch/cpu/libtorch-macos-latest.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip)
 else()
-file(DOWNLOAD https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-latest.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip)
+file(DOWNLOAD https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-latest-1.7.0%2Bcpu.zip ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip)
 endif()
 endif()
 execute_process(
