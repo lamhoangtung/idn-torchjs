@@ -19,7 +19,8 @@ private:
   ~Tensor();
   static NAN_METHOD(New);
   static NAN_METHOD(toString);
-
+  static NAN_METHOD(cuda);
+  static NAN_METHOD(cpu);
   static NAN_GETTER(HandleGetters);
   static NAN_SETTER(HandleSetters);
 
