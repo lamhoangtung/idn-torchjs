@@ -58,7 +58,7 @@ NAN_METHOD(Tensor::toString)
   Tensor *obj = ObjectWrap::Unwrap<Tensor>(info.Holder());
   std::stringstream ss;
   at::IntArrayRef sizes = obj->mTensor.sizes();
-  auto option = obj->mTensor.option();
+  auto option = obj->mTensor.options();
   ss << "Tensor[Type=" << option.dtype() << "_" << option.device() << ", ";
   ss << "Size=" << sizes << std::endl;
   info.GetReturnValue().Set(Nan::New(ss.str()).ToLocalChecked());
@@ -199,7 +199,7 @@ NAN_GETTER(Tensor::HandleGetters)
   else if (propertyName == "type")
   {
     std::stringstream ss;
-    auto option = self->mTensor.option();
+    auto option = self->mTensor.options();
     ss << option.dtype() << "_" << option.device();
     v8::Local<v8::String> type = Nan::New<v8::String>(ss.str()).ToLocalChecked();
     info.GetReturnValue().Set(type);
