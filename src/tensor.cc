@@ -58,7 +58,7 @@ NAN_METHOD(Tensor::toString)
   Tensor *obj = ObjectWrap::Unwrap<Tensor>(info.Holder());
   std::stringstream ss;
   at::IntList sizes = obj->mTensor.sizes();
-  ss << "Tensor[Type=" << obj->mTensor.type() << ", ";
+  ss << "Tensor[Type=" << obj->mTensor.options() << ", ";
   ss << "Size=" << sizes << std::endl;
   info.GetReturnValue().Set(Nan::New(ss.str()).ToLocalChecked());
 }
@@ -173,7 +173,7 @@ NAN_GETTER(Tensor::HandleGetters)
     float *dst = *typedArrayContents;
 
     torch::Tensor x = self->mTensor.contiguous();
-    auto x_p = x.data<float>();
+    auto x_p = x.data_ptr<float>();
     numel = x.numel();
 
     for (size_t i = 0; i < numel; i++)
@@ -197,7 +197,7 @@ NAN_GETTER(Tensor::HandleGetters)
   }
   else if (propertyName == "type")
   {
-    v8::Local<v8::String> type = Nan::New<v8::String>(self->mTensor.type().toString()).ToLocalChecked();
+    v8::Local<v8::String> type = Nan::New<v8::String>(self->mTensor.options().toString()).ToLocalChecked();
     info.GetReturnValue().Set(type);
   }
   else
@@ -223,7 +223,7 @@ NAN_SETTER(Tensor::HandleSetters)
     float *dst = *typedArrayContents;
 
     torch::Tensor x = self->mTensor.contiguous();
-    auto x_p = x.data<float>();
+    auto x_p = x.data_ptr<float>();
     uint64_t numel = x.numel();
 
     for (size_t i = 0; i < numel; i++)
