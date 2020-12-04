@@ -57,7 +57,7 @@ NAN_METHOD(Tensor::toString)
 {
   Tensor *obj = ObjectWrap::Unwrap<Tensor>(info.Holder());
   std::stringstream ss;
-  at::IntList sizes = obj->mTensor.sizes();
+  at::IntArrayRef sizes = obj->mTensor.sizes();
   ss << "Tensor[Type=" << obj->mTensor.type() << ", ";
   ss << "Size=" << sizes << std::endl;
   info.GetReturnValue().Set(Nan::New(ss.str()).ToLocalChecked());
@@ -186,7 +186,7 @@ NAN_GETTER(Tensor::HandleGetters)
   else if (propertyName == "sizes")
   {
     uint8_t dim = self->mTensor.dim();
-    at::IntList sizes = self->mTensor.sizes();
+    at::IntArrayRef sizes = self->mTensor.sizes();
     v8::Local<v8::Array> array = Nan::New<v8::Array>(dim);
     for (size_t i = 0; i < dim; i++)
     {
