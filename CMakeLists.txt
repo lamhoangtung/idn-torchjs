@@ -27,15 +27,15 @@ if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/libtorch/")
           set(DOWNLOAD_LINK
               "https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-win-shared-with-deps-${TORCH_VERSION}.zip"
           )
-          message(STATUS
-                  "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
+          message(
+            STATUS "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
           file(DOWNLOAD ${DOWNLOAD_LINK} ${LIBTORCH_SAVE_PATH})
         else()
           set(DOWNLOAD_LINK
               "https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-win-shared-with-deps-${TORCH_VERSION}%2Bcu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}-.zip"
           )
-          message(STATUS
-                  "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
+          message(
+            STATUS "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
           file(DOWNLOAD ${DOWNLOAD_LINK} ${LIBTORCH_SAVE_PATH})
         endif()
       elseif(APPLE)
@@ -54,15 +54,13 @@ if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/libtorch/")
           set(DOWNLOAD_LINK
               "https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-shared-with-deps-${TORCH_VERSION}.zip"
           )
-          message(STATUS
-                  "Downloading libtorch for Linux from ${DOWNLOAD_LINK}")
+          message(STATUS "Downloading libtorch for Linux from ${DOWNLOAD_LINK}")
           file(DOWNLOAD ${DOWNLOAD_LINK} ${LIBTORCH_SAVE_PATH})
         else()
           set(DOWNLOAD_LINK
               "https://download.pytorch.org/libtorch/cu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}/libtorch-shared-with-deps-${TORCH_VERSION}%2Bcu${CUDA_VERSION_MAJOR}${CUDA_VERSION_MINOR}.zip"
           )
-          message(STATUS
-                  "Downloading libtorch for Linux from ${DOWNLOAD_LINK}")
+          message(STATUS "Downloading libtorch for Linux from ${DOWNLOAD_LINK}")
           file(DOWNLOAD ${DOWNLOAD_LINK} ${LIBTORCH_SAVE_PATH})
         endif()
       endif()
@@ -76,8 +74,7 @@ if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/libtorch/")
         set(DOWNLOAD_LINK
             "https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with-deps-${TORCH_VERSION}%2Bcpu.zip"
         )
-        message(STATUS
-                "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
+        message(STATUS "Downloading libtorch for Windows from ${DOWNLOAD_LINK}")
         file(DOWNLOAD ${DOWNLOAD_LINK} ${LIBTORCH_SAVE_PATH})
       elseif(APPLE)
         set(DOWNLOAD_LINK
