@@ -106,6 +106,7 @@ find_package(Torch REQUIRED)
 # Essential include files to build a node addon, you should add this line in
 # every CMake.js based project.
 include_directories(${CMAKE_JS_INC})
+include_directories(${CMAKE_JS_INC} ../nan)
 
 # Declare the location of the source files
 file(GLOB SOURCE_FILES "src/*.cc" "src/*.h")
