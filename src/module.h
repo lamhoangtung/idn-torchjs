@@ -4,6 +4,7 @@
 #include <nan.h>
 #include <string>
 #include <torch/script.h>
+#include <torchvision/vision.h>
 
 namespace torchjs
 {

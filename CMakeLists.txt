@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 project(torchjs)
 set(TORCH_VERSION "1.7.1")
 set(TORCH_DEFAULT_CUDA "102")
+set(TORCHVISION_VERSION "v0.9.0-rc2")
 
 # Not had libtorch at source dir
 if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/libtorch/")
@@ -97,11 +98,32 @@ else()
   message(STATUS "libtorch found in ${CMAKE_CURRENT_BINARY_DIR}/libtorch/")
 endif()
 
+# Not had torchvision at sourcedir
+if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/")
+    set(LIB_TORCHVISION_SAVE_PATH
+        "${CMAKE_CURRENT_SOURCE_DIR}/lib_torchvision.zip"
+    )
+    if(NOT EXISTS ${LIB_TORCHVISION_SAVE_PATH})
+      # Download it form git
+        set(DOWNLOAD_LINK
+            "https://github.com/pytorch/vision/archive/${TORCHVISION_VERSION}.zip"
+        )
+        message(STATUS "Downloading torchvision source from ${DOWNLOAD_LINK}")
+        file(DOWNLOAD ${DOWNLOAD_LINK} ${LIB_TORCHVISION_SAVE_PATH})
+    endif()
+    message(STATUS "Unziping ${LIB_TORCHVISION_SAVE_PATH}")
+    execute_process(COMMAND unzip -qq -o ${LIB_TORCHVISION_SAVE_PATH})
+    endif()
+else()
+  message(STATUS "lib_torchvision found in ${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/")
+endif()
+
 # execute_process( COMMAND rm ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip )
 
-set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR}/libtorch/)
+set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR}/libtorch/;${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision)
 
 find_package(Torch REQUIRED)
+find_package(TorchVision REQUIRED)
 
 # Essential include files to build a node addon, you should add this line in
 # every CMake.js based project.
@@ -124,3 +146,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 # Essential library files to link to a node addon, you should add this line in
 # every CMake.js based project.
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB};${TORCH_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} TorchVision::TorchVision)

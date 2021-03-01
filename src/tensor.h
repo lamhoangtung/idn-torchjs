@@ -3,6 +3,7 @@
 
 #include <nan.h>
 #include <torch/torch.h>
+#include <torchvision/vision.h>
 
 namespace torchjs
 {
