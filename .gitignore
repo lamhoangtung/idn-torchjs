@@ -80,3 +80,4 @@ core
 _libtorch
 *.zip
 *.pt
+lib_torchvision

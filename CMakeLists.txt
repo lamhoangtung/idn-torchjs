@@ -99,7 +99,8 @@ else()
 endif()
 
 # Not had torchvision at sourcedir
-if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/")
+set(LIB_TORCHVISION_SAVE_DIR "${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/${TORCHVISION_VERSION}")
+if(NOT EXISTS ${LIB_TORCHVISION_SAVE_DIR})
     set(LIB_TORCHVISION_SAVE_PATH
         "${CMAKE_CURRENT_SOURCE_DIR}/lib_torchvision.zip"
     )
@@ -112,15 +113,15 @@ if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/")
         file(DOWNLOAD ${DOWNLOAD_LINK} ${LIB_TORCHVISION_SAVE_PATH})
     endif()
     message(STATUS "Unziping ${LIB_TORCHVISION_SAVE_PATH}")
-    execute_process(COMMAND unzip -qq -o ${LIB_TORCHVISION_SAVE_PATH})
+    execute_process(COMMAND unzip -qq -o ${LIB_TORCHVISION_SAVE_PATH} -d ${LIB_TORCHVISION_SAVE_DIR})
     endif()
 else()
-  message(STATUS "lib_torchvision found in ${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision/")
+  message(STATUS "lib_torchvision found in ${LIB_TORCHVISION_SAVE_DIR}")
 endif()
 
 # execute_process( COMMAND rm ${CMAKE_CURRENT_SOURCE_DIR}/libtorch-cpu.zip )
 
-set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR}/libtorch/;${CMAKE_CURRENT_BINARY_DIR}/lib_torchvision)
+set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR}/libtorch/;${LIB_TORCHVISION_SAVE_DIR})
 
 find_package(Torch REQUIRED)
 find_package(TorchVision REQUIRED)
